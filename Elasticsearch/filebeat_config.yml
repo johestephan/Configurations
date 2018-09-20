@@ -1,0 +1,16 @@
+filebeat.prospectors:
+
+- input_type: log
+  paths:
+    - /var/log/syslog
+    - /var/log/nginx/*.log
+    - /var/log/fail2ban.log
+
+  protocol: "https":
+
+output.logstash:
+  hosts: ["<<changeme>>:5044"]
+  ssl.certificate_authorities: ["/etc/ssl/logstash-forwarder.crt"]
+#logging.level: debug
+#logging.selectors: ["*"]
+
