@@ -1,0 +1,16 @@
+version: '2'
+services:
+  couchdb:
+    image: couchdb
+    hostname: couchdb
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=password
+    ports:
+      - '5984:5984'
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+volumes:
+  couchdb_data:
+    driver: local
