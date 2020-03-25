@@ -50,6 +50,26 @@ services:
     depends_on:
       - elasticsearch
 
+  packetbeat:
+    image: docker.elastic.co/beats/packetbeat:7.6.1
+    hostname: packetbeat
+    user: root
+    volumes:
+      - packetbeat:/usr/share/packetbeat/data
+      - "${PWD}/config.yml:/etc/packetbeat/packetbeat.yml:ro"
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch
+      - KIBANA_HOST=kibana
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    command: ["--strict.perms=false"]
+    command: -e -E 'output.elasticsearch.hosts=["elasticsearch:9200"]'
+    depends_on:
+      - elasticsearch
+
 volumes:
   elasticsearch-data:
+    driver: local
+  packetbeat:
     driver: local
